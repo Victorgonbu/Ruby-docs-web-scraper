@@ -1,15 +1,22 @@
 require 'httparty'
 require 'nokogiri'
 require 'byebug'
+require_relative '../lib/classes.rb'
+require_relative '../lib/modules.rb'
 
 puts "Welcome to ruby docs scrapper"
 puts 'Here you will find all classes and mudules in ruby-doc.org version 2.7.1'
+
+def menu
 puts '------Menu------'
-puts "1. see all ruby classes"
+puts '1. see all ruby classes'
 puts '2. see all ruby modules'
 input = gets.chomp.to_i
 
 puts "what are you doing" unless input == 1 || input == 2
+
+scrapper(input)
+end
 
 
 def display(s, parsed_page)
@@ -21,6 +28,41 @@ def display(s, parsed_page)
     end
     puts s.capitalize + "(#{selected_array.length})"
     selected_array.each {|element| puts element}
+
+    search_by_name(selected_array, s)
+
+end
+
+def search_by_name(array, string)
+    puts "Seach by name in #{string}"
+    search = gets.chomp.capitalize
+    arr = []
+    validate = false
+    array.each do |element|
+        s_length = search.length
+        if element == search
+            if string == 'class'
+                @var = Classes.new(element)
+            else 
+                @var = Modules.new(element)
+            end
+            break
+        elsif element[0...s_length] == search
+                arr << element
+                validate = true
+        end
+    end
+    
+    if validate
+        puts "Related results for #{search}"
+        puts arr
+        search_by_name(array, string)
+    elsif @var.nil?
+        puts "there is no match for #{search} in #{string} "
+    else 
+        p @var
+    end
+    
 end
 
 def scrapper(input)
@@ -35,4 +77,4 @@ def scrapper(input)
     end
 end
 
-scrapper(input)
+menu
