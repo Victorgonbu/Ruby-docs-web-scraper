@@ -1,4 +1,4 @@
-require 'httparty'
+require 'open-uri'
 require 'nokogiri'
 require 'byebug'
 require_relative '../lib/classes.rb'
@@ -35,19 +35,19 @@ end
 
 def search_by_name(array, string)
     puts "Seach by name in #{string}"
-    search = gets.chomp.capitalize
+    search = gets.chomp.downcase
     arr = []
     validate = false
     array.each do |element|
         s_length = search.length
-        if element == search
+        if element.downcase == search
             if string == 'class'
                 @var = Classes.new(element)
             else 
                 @var = Modules.new(element)
             end
             break
-        elsif element[0...s_length] == search
+        elsif element[0...s_length].downcase == search
                 arr << element
                 validate = true
         end
@@ -60,15 +60,22 @@ def search_by_name(array, string)
     elsif @var.nil?
         puts "there is no match for #{search} in #{string} "
     else 
-        p @var
+        array = @var.class_methods
+        byebug
+        array.each_with_index do |element, i|
+
+            puts "-----------#{(i+1)}METHOD----------------"
+            puts element
+
+        end
     end
     
 end
 
 def scrapper(input)
     url = "https://ruby-doc.org/core-2.7.1/"
-    unparsed_page = HTTParty.get(url)
-    parsed_page = Nokogiri::HTML(unparsed_page)
+    unparsed_page = URI.open(url)
+    parsed_page = Nokogiri::HTML(unparsed_page)     
     
     if input == 1
         display("class", parsed_page)
