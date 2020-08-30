@@ -44,7 +44,7 @@ def search_by_name(array, string)
             if string == 'class'
                 @var = Classes.new(element)
             else 
-                @var = Modules.new(element)
+                @var = Classes.new(element)
             end
             break
         elsif element[0...s_length].downcase == search
@@ -52,30 +52,35 @@ def search_by_name(array, string)
                 validate = true
         end
     end
-    
+
     if validate
         puts "Related results for #{search}"
         puts arr
         search_by_name(array, string)
     elsif @var.nil?
         puts "there is no match for #{search} in #{string} "
-    else 
-        puts "--------#{search.capitalize}--------- "
-        puts "1. see class methods
-2. see instance methods"
-        option = gets.chomp.to_i
-        if option == 1
-             puts "#{search.capitalize} Class methods"
-            array = @var.class_methods("class")
-            list = @var.method_names
-            puts "method classe not found" if array.nil?
-            array.each_with_index do |element, i|
+    elsif @var.method_names.empty?
+        puts "No methods for #{search.capitalize}"
+    else
+
+           puts "--------#{search.capitalize}--------- "
+          puts "1. see class methods
+              2. see instance methods"
+           option = gets.chomp.to_i
+          
+            if option == 1
+                puts "#{search.capitalize} Class methods"
+                array = @var.class_methods("class")
+                list = @var.method_names
+                puts "method classes not found" if array.empty?
+                array.each_with_index do |element, i|
     
                 puts "-----------#{list[i]}----------------"
                 puts element
     
-            end
-        elsif option == 2
+                end
+                byebug
+            elsif option == 2
             length = @var.method_names.length
             start = @var.class_methods('class').length
             puts "#{search.capitalize} Intance methods"
@@ -88,12 +93,12 @@ def search_by_name(array, string)
                 puts element
                 puts ""
             end
-            byebug
+            
 
-        else
-          puts "invalid input"
-        end
-       
+            else
+              puts "invalid input"
+            end
+     
     end
     
 end
