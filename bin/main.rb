@@ -61,10 +61,11 @@ def search_by_name(array, string)
         puts "there is no match for #{search} in #{string} "
     else 
         array = @var.class_methods
+        list = @var.method_names
         byebug
         array.each_with_index do |element, i|
 
-            puts "-----------#{(i+1)}METHOD----------------"
+            puts "-----------#{list[i]}----------------"
             puts element
 
         end

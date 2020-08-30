@@ -31,12 +31,15 @@ class Classes
             puts "this is #{var} "
             champeta << var
         end
-        byebug
         champeta
     end
     
-    def method_name
-        method_list = parsed_url.css(#method-list-section)
+    def method_names
+        method_list = []
+        method_list_url = parsed_url.css('#method-list-section').css('ul').css('li')
+        method_list_url.each {|element| method_list << element.text}
+        method_list
+
     end
 
     def instace_methods
