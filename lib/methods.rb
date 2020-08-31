@@ -1,18 +1,20 @@
 require 'byebug'
 require 'open-uri'
 require 'httparty'
-class Classes 
-    attr_reader :class_url, :parsed_url, :name
+class Methods
+    include Validator
+    attr_reader :class_url, :parsed_url, :name, :selected_list
+    attr_writer :parsed_url
 
     def initialize (element)
         @name = element
-        @class_url = "https://ruby-doc.org/core-2.7.0/#{@name.capitalize}.html"
-        begin
-        @unparsed_url = HTTParty.get(class_url) 
-        rescue 
-            puts  "que falla mi pes ->"
-        end
-        @parsed_url =  Nokogiri::HTML(@unparsed_url)
+    end
+
+    def method_list(s, parsed_page)
+        list = parsed_page.css("p.#{s}")
+        @selected_list = []
+        list.each { |element| @selected_list << element.css('a').text }
+        @selected_list
     end
 
     def class_methods(string)
@@ -20,6 +22,7 @@ class Classes
         method_heading = []
         champeta = []
         arr = []
+        byebug
         class_method = @parsed_url.css("#public-#{string}-method-details").css('div.method-detail')
         class_method.each do |element|
             method_heading << element.css('div.method-heading').text
@@ -38,7 +41,6 @@ class Classes
         method_list_url = parsed_url.css('#method-list-section').css('ul').css('li')
         method_list_url.each {|element| method_list << element.text}
         method_list
-
     end
 
     def instace_methods

@@ -19,9 +19,19 @@ input = gets.chomp.to_i
 
 case input
 when 1
-    display("class", @doc.parsed_page)
+    input = "class"
+    classes = Methods.new(input)
+    method_list = classes.method_list("class", @doc.parsed_page)
+    puts "#{input.capitalize} (#{method_list.length})"
+    puts method_list
+    search_by_name(classes, input)
 when 2
-    display("module", @doc.parsed_page)
+    input = "module"
+    modules = Methods.new(input)
+    method_list = modules.method_list("module", @doc.parsed_page)
+    puts "#{input.capitalize} (#{method_list.length})"
+    puts method_list
+    search_by_name(modules, input)
 when 3
     exit
 else
@@ -32,47 +42,30 @@ end
 end
 
 
-def display(s, parsed_page)
-    array = parsed_page.css("p.#{s}")
-    selected_array = []
-    array.each do |element|
-            value = element.css('a').text
-            selected_array << value
-    end
-    puts s.capitalize + "(#{selected_array.length})"
-    selected_array.each {|element| puts element}
-
-    search_by_name(selected_array, s)
-
-end
-
-def search_by_name(array, string)
+def search_by_name(type, string)
+    array = type.selected_list
     puts "Seach by name in #{string}"
     search = gets.chomp.downcase
     arr = []
-    validate = false
+    validate = 0
     array.each do |element|
         s_length = search.length
         if element.downcase == search
-            if string == 'class'
-                @var = Methods.new(element)
-            else 
-                @var = Methods.new(element)
-            end
-            break
+            @doc.sub_url= element
+            type.parsed_url = @doc.sub_url
         elsif element[0...s_length].downcase == search
                 arr << element
-                validate = true
+                validate = 1
         end
     end
 
-    if validate
+    if validate  == 1
         puts "Related results for #{search}"
         puts arr
-        search_by_name(array, string)
-    elsif @var.nil?
+        search_by_name(type, string)
+    elsif type.parsed_url.nil?
         puts "there is no match for #{search} in #{string} "
-    elsif @var.method_names.empty?
+    elsif type.method_names.empty?
         puts "No methods for #{search.capitalize}"
     else
 
@@ -83,8 +76,8 @@ def search_by_name(array, string)
           
             if option == 1
                 puts "#{search.capitalize} Class methods"
-                array = @var.class_methods("class")
-                list = @var.method_names
+                array = type.class_methods("class")
+                list = type.method_names
                 puts "method classes not found" if array.empty?
                 array.each_with_index do |element, i|
     
@@ -94,11 +87,11 @@ def search_by_name(array, string)
                 end
         
             elsif option == 2
-            length = @var.method_names.length
-            start = @var.class_methods('class').length
+            length = type.method_names.length
+            start = type.class_methods('class').length
             puts "#{search.capitalize} Intance methods"
-            array = @var.class_methods("instance")
-            list = @var.method_names[start..length]
+            array = type.class_methods("instance")
+            list = type.method_names[start..length]
             puts "method classe not found" if array.nil?
             array.each_with_index do |element, i|
     
