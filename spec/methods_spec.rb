@@ -2,7 +2,6 @@
 require_relative '../lib/methods.rb'
 require_relative '../lib/url.rb'
 require 'rspec'
-require 'byebug'
 require 'Nokogiri'
 
 describe Methods do

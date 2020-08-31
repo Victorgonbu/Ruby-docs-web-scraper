@@ -10,5 +10,6 @@ class Url
     @s_url = @url + string + '.html'
     unparsed_page = URI.open(@s_url)
     @sub_method_parsed = Nokogiri::HTML(unparsed_page)
+    @s_url
   end
 end
