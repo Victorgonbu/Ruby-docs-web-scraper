@@ -27,7 +27,9 @@ when 1
     puts "
 Search by name in #{input.capitalize}"
     search = gets.chomp.downcase
-    classes.search_by_name(search, @doc)
+    result = classes.search_by_name(search, @doc)
+    validate_search(result, classes)
+    
 when 2
     input = "module"
     modules = Methods.new(input)
@@ -37,7 +39,9 @@ when 2
     puts "
 Search by name in #{input.capitalize}"
     search = gets.chomp.downcase
-    modules.search_by_name(search, @doc)
+    result = modules.search_by_name(search, @doc)
+    validate_search(result, modules)
+    
 when 3
     exit
 else
@@ -48,5 +52,60 @@ end
 
 end
 
+def validate_search(result, object)
+
+    if result == 2
+        puts "Related results for #{object.search}"
+        puts object.related_arr
+        object.search_by_name(object.search, @doc)
+    elsif result == 0
+        puts "there is no match for #{search} in #{name} "
+    elsif result == 1
+        object.create_sub_url(@doc)
+        content_table(object)
+    
+    end
+   
+end
+
+
+def content_table(object)
+    puts "--------#{object.search.capitalize}--------- "
+    puts "1. see class methods "
+    puts "2. see instance methods"
+    option = gets.chomp.to_i
+      
+    if option == 1
+        puts "#{object.search.capitalize} Class methods"
+        array = object.class_methods("class")
+        list = object.method_names
+        puts "Method classes not found" if array.empty?
+        array.each_with_index do |element, i|
+
+            puts "----------(#{list[i]})----------"
+            puts element
+
+            end
+    
+    elsif option == 2
+        length = object.method_names.length
+        start = object.class_methods('class').length
+        puts "#{object.search.capitalize} Intance methods"
+        array = object.class_methods("instance")
+        list = object.method_names[start..length]
+        puts "method classe not found" if array.nil?
+        array.each_with_index do |element, i|
+
+            puts "----------(#{list[i]})----------"
+            puts element
+            puts ""
+        end
+        
+
+    else
+          puts "invalid input"
+          content_table(object)
+    end
+end
 
 menu
