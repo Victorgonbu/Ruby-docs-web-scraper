@@ -13,6 +13,7 @@ class Methods
     def create_sub_url(doc)
         doc.sub_url= @current_element
         self.parsed_url = doc.sub_url
+        @class_url = doc.s_url
     end
 
     def method_list(s, parsed_page)
@@ -42,7 +43,6 @@ class Methods
     
     def method_names
         method_list = []
-        byebug
         method_list_url = @parsed_url.css('#method-list-section').css('ul').css('li')
         method_list_url.each {|element| method_list << element.text}
         method_list

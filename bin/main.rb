@@ -10,6 +10,23 @@ puts 'Here you will find all classes and mudules in ruby-doc.org version 2.7.1'
 
 @doc = Url.new
 
+def selection(input)
+    object = Methods.new(input)
+    method_list = object.method_list(input, @doc.parsed_page)
+    puts "#{input.capitalize} (#{method_list.length})"
+    puts method_list
+    search(object)
+end
+
+def search(object)
+    puts "
+Search by name in #{object.name}"
+            search = gets.chomp.downcase
+            result = object.search_by_name(search, @doc)
+            validate_search(result, object)
+end
+
+
 def menu
 puts '----------Menu----------'
 puts '1.Show all Ruby classes'
@@ -20,27 +37,10 @@ input = gets.chomp.to_i
 case input
 when 1
     input = "class"
-    classes = Methods.new(input)
-    method_list = classes.method_list("class", @doc.parsed_page)
-    puts "#{input.capitalize} (#{method_list.length})"
-    puts method_list
-    puts "
-Search by name in #{input.capitalize}"
-    search = gets.chomp.downcase
-    result = classes.search_by_name(search, @doc)
-    validate_search(result, classes)
-    
+    selection(input)
 when 2
     input = "module"
-    modules = Methods.new(input)
-    method_list = modules.method_list("module", @doc.parsed_page)
-    puts "#{input.capitalize} (#{method_list.length})"
-    puts method_list
-    puts "
-Search by name in #{input.capitalize}"
-    search = gets.chomp.downcase
-    result = modules.search_by_name(search, @doc)
-    validate_search(result, modules)
+    selection(input)
     
 when 3
     exit
@@ -58,8 +58,10 @@ def validate_search(result, object)
         puts "Related results for #{object.search}"
         puts object.related_arr
         object.search_by_name(object.search, @doc)
+        search(object)
     elsif result == 0
-        puts "there is no match for #{search} in #{name} "
+        puts "there is no match for #{object.search} in #{object.name} "
+        search(object)
     elsif result == 1
         object.create_sub_url(@doc)
         content_table(object)
@@ -79,6 +81,7 @@ def content_table(object)
         puts "#{object.search.capitalize} Class methods"
         array = object.class_methods("class")
         list = object.method_names
+        puts "URL : #{object.class_url}"
         puts "Method classes not found" if array.empty?
         array.each_with_index do |element, i|
 
