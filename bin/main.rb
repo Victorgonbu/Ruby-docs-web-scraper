@@ -92,8 +92,8 @@ end
 
 def content_table(object)
   puts "--------#{object.search.capitalize}--------- "
-  puts '1. see class methods '
-  puts '2. see instance methods'
+  puts '1.Show class methods '
+  puts '2.Show instance methods'
   option = gets.chomp.to_i
 
   if option == 1
