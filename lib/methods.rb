@@ -43,13 +43,6 @@ class Methods
         method_list
     end
 
-    def instace_methods
-        
-    end
-    
-    def method_details
-    end
-    
 
 
 end
