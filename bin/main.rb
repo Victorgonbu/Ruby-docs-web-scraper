@@ -1,21 +1,34 @@
 require 'open-uri'
 require 'nokogiri'
 require 'byebug'
-require_relative '../lib/classes.rb'
-require_relative '../lib/modules.rb'
+require_relative '../lib/validator.rb'
+require_relative '../lib/methods.rb'
+require_relative '../lib/url.rb'
 
 puts "Welcome to ruby docs scrapper"
 puts 'Here you will find all classes and mudules in ruby-doc.org version 2.7.1'
 
+@doc = Url.new
+
 def menu
-puts '------Menu------'
-puts '1. see all ruby classes'
-puts '2. see all ruby modules'
+puts '----------Menu----------'
+puts '1.Show all Ruby classes'
+puts '2.Show all Ruby modules'
+puts '3.Exit'
 input = gets.chomp.to_i
 
-puts "what are you doing" unless input == 1 || input == 2
+case input
+when 1
+    display("class", @doc.parsed_page)
+when 2
+    display("module", @doc.parsed_page)
+when 3
+    exit
+else
+    puts "Sorry, it seem there is no match for #{input}"
+end
 
-scrapper(input)
+
 end
 
 
@@ -42,9 +55,9 @@ def search_by_name(array, string)
         s_length = search.length
         if element.downcase == search
             if string == 'class'
-                @var = Classes.new(element)
+                @var = Methods.new(element)
             else 
-                @var = Classes.new(element)
+                @var = Methods.new(element)
             end
             break
         elsif element[0...s_length].downcase == search
@@ -79,7 +92,7 @@ def search_by_name(array, string)
                 puts element
     
                 end
-                byebug
+        
             elsif option == 2
             length = @var.method_names.length
             start = @var.class_methods('class').length
@@ -103,16 +116,5 @@ def search_by_name(array, string)
     
 end
 
-def scrapper(input)
-    url = "https://ruby-doc.org/core-2.7.1/"
-    unparsed_page = URI.open(url)
-    parsed_page = Nokogiri::HTML(unparsed_page)     
-    
-    if input == 1
-        display("class", parsed_page)
-    elsif input == 2
-        display("module", parsed_page)
-    end
-end
 
 menu
