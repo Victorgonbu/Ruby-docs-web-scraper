@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'byebug'
-require_relative '../lib/validator.rb'
+
 require_relative '../lib/methods.rb'
 require_relative '../lib/url.rb'
 
@@ -22,7 +22,7 @@ def search(object)
   puts "
 Search by name in #{object.name}"
   search = gets.chomp.downcase
-  result = object.search_by_name(search, @doc)
+  result = object.search_by_name(search)
   validate_search(result, object)
 end
 
@@ -54,7 +54,7 @@ def validate_search(result, object)
   if result == 2
     puts "Related results for #{object.search}"
     puts object.related_arr
-    object.search_by_name(object.search, @doc)
+    object.search_by_name(object.search)
     search(object)
   elsif result.zero?
     puts "there is no match for #{object.search} in #{object.name} "

@@ -3,17 +3,10 @@ require 'open-uri'
 require 'httparty'
 class Methods
   attr_reader :class_url, :parsed_url, :name, :selected_list, :search, :related_arr
-  attr_writer :parsed_url
 
   def initialize(element)
     @name = element
     @related_arr = []
-  end
-
-  def create_sub_url(doc)
-    doc.sub_url = @current_element
-    self.parsed_url = doc.sub_url
-    @class_url = doc.s_url
   end
 
   def method_list(string, parsed_page)
@@ -43,7 +36,7 @@ class Methods
     method_list
   end
 
-  def search_by_name(search, _doc)
+  def search_by_name(search)
     array = selected_list
     @search = search
     validate = 0
@@ -58,6 +51,12 @@ class Methods
       end
     end
     validate
+  end
+
+  def create_sub_url(doc)
+    doc.sub_url(@current_element)
+    @parsed_url = doc.sub_method_parsed
+    @class_url = doc.s_url
   end
 
   def no_methods?
