@@ -24,21 +24,16 @@ class Methods
     end
 
     def select_methods(string)
-        method_details = []
         method_heading = []
-        champeta = []
-        arr = []
-        class_method = @parsed_url.css("#public-#{string}-method-details").css('div.method-detail')
-        class_method.each do |element|
-            method_heading << element.css('div.method-heading').text
-
-        end
+        selected = []
+        method_detail = @parsed_url.css("#public-#{string}-method-details").css('div.method-detail')
+        method_detail.each { |element| method_heading << element.css('div.method-heading').text}
         method_heading.each_with_index do |element1, i1|
             var = method_heading[i1].split("\n          ")
             var = var.reject {|e| e.to_s.empty? || e == "  " || e == "  click to toggle source"}
-            champeta << var
+            selected << var
         end
-        champeta
+        selected
     end
     
     def method_names

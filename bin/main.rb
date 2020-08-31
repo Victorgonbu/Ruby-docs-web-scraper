@@ -28,7 +28,8 @@ end
 
 
 def menu
-puts '----------Menu----------'
+puts '
+----------Menu----------'
 puts '1.Show all Ruby classes'
 puts '2.Show all Ruby modules'
 puts '3.Exit'
