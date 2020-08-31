@@ -64,10 +64,37 @@ def validate_search(result, object)
         search(object)
     elsif result == 1
         object.create_sub_url(@doc)
+        if object.method_names.empty? 
+            puts "There are no methods for #{object.search}"
+            menu
+        else
         content_table(object)
+        end
     
     end
    
+end
+
+def display_methods(string, object)
+    if string == "instance"
+        length = object.method_names.length
+        start = object.select_methods('class').length
+        list = object.method_names[start..length]
+    else 
+        list = object.method_names
+    end
+
+    puts "#{object.search.capitalize} #{string.capitalize} methods"
+    array = object.select_methods(string)
+    puts "URL : #{object.class_url}"
+    puts "Method classes not found" if array.empty?
+    array.each_with_index do |element, i|
+
+        puts "----------(#{list[i]})----------"
+        puts element
+
+    end
+
 end
 
 
@@ -76,39 +103,17 @@ def content_table(object)
     puts "1. see class methods "
     puts "2. see instance methods"
     option = gets.chomp.to_i
-      
+    
     if option == 1
-        puts "#{object.search.capitalize} Class methods"
-        array = object.class_methods("class")
-        list = object.method_names
-        puts "URL : #{object.class_url}"
-        puts "Method classes not found" if array.empty?
-        array.each_with_index do |element, i|
-
-            puts "----------(#{list[i]})----------"
-            puts element
-
-            end
+        display_methods("class", object)
     
     elsif option == 2
-        length = object.method_names.length
-        start = object.class_methods('class').length
-        puts "#{object.search.capitalize} Intance methods"
-        array = object.class_methods("instance")
-        list = object.method_names[start..length]
-        puts "method classe not found" if array.nil?
-        array.each_with_index do |element, i|
-
-            puts "----------(#{list[i]})----------"
-            puts element
-            puts ""
-        end
-        
-
+       display_methods("instance", object)
     else
           puts "invalid input"
           content_table(object)
     end
+    menu
 end
 
 menu

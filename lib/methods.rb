@@ -23,7 +23,7 @@ class Methods
         @selected_list
     end
 
-    def class_methods(string)
+    def select_methods(string)
         method_details = []
         method_heading = []
         champeta = []
