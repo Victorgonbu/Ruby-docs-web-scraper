@@ -22,7 +22,6 @@ class Methods
         method_heading = []
         champeta = []
         arr = []
-        byebug
         class_method = @parsed_url.css("#public-#{string}-method-details").css('div.method-detail')
         class_method.each do |element|
             method_heading << element.css('div.method-heading').text
@@ -42,6 +41,73 @@ class Methods
         method_list_url.each {|element| method_list << element.text}
         method_list
     end
+
+    def search_by_name(search, doc)
+        array = self.selected_list
+        arr = []
+        validate = false
+        array.each do |element|
+            s_length = search.length
+            if element.downcase == search
+                doc.sub_url= element
+                self.parsed_url = doc.sub_url
+            elsif element[0...s_length].downcase == search
+                    arr << element
+                    validate = true
+            end
+        end
+    end
+    
+        if validate 
+            puts "Related results for #{search}"
+            puts arr
+            search_by_name(search)
+        elsif self.parsed_url.nil?
+            puts "there is no match for #{search} in #{name} "
+        elsif self.method_names.empty?
+            puts "No methods for #{search.capitalize}"
+        else
+    
+            puts "--------#{search.capitalize}--------- "
+            puts "1. see class methods "
+            puts "2. see instance methods"
+            option = gets.chomp.to_i
+              
+                if option == 1
+                    puts "#{search.capitalize} Class methods"
+                    array = self.class_methods("class")
+                    list = self.method_names
+                    puts "method classes not found" if array.empty?
+                    array.each_with_index do |element, i|
+        
+                    puts "-----------#{list[i]}----------------"
+                    puts element
+        
+                    end
+            
+                elsif option == 2
+                length = self.method_names.length
+                start = self.class_methods('class').length
+                puts "#{search.capitalize} Intance methods"
+                array = self.class_methods("instance")
+                list = self.method_names[start..length]
+                puts "method classe not found" if array.nil?
+                array.each_with_index do |element, i|
+        
+                    puts "-----------(#{list[i]})----------------"
+                    puts element
+                    puts ""
+                end
+                
+    
+                else
+                  puts "invalid input"
+                end
+         
+        end
+        
+    
+    
 
 
 

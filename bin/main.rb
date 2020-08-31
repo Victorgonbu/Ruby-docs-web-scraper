@@ -24,89 +24,28 @@ when 1
     method_list = classes.method_list("class", @doc.parsed_page)
     puts "#{input.capitalize} (#{method_list.length})"
     puts method_list
-    search_by_name(classes, input)
+    puts "
+Search by name in #{input.capitalize}"
+    search = gets.chomp.downcase
+    classes.search_by_name(search, @doc)
 when 2
     input = "module"
     modules = Methods.new(input)
     method_list = modules.method_list("module", @doc.parsed_page)
     puts "#{input.capitalize} (#{method_list.length})"
     puts method_list
-    search_by_name(modules, input)
+    puts "
+Search by name in #{input.capitalize}"
+    search = gets.chomp.downcase
+    modules.search_by_name(search, @doc)
 when 3
     exit
 else
     puts "Sorry, it seem there is no match for #{input}"
+    menu
 end
 
 
-end
-
-
-def search_by_name(type, string)
-    array = type.selected_list
-    puts "Seach by name in #{string}"
-    search = gets.chomp.downcase
-    arr = []
-    validate = 0
-    array.each do |element|
-        s_length = search.length
-        if element.downcase == search
-            @doc.sub_url= element
-            type.parsed_url = @doc.sub_url
-        elsif element[0...s_length].downcase == search
-                arr << element
-                validate = 1
-        end
-    end
-
-    if validate  == 1
-        puts "Related results for #{search}"
-        puts arr
-        search_by_name(type, string)
-    elsif type.parsed_url.nil?
-        puts "there is no match for #{search} in #{string} "
-    elsif type.method_names.empty?
-        puts "No methods for #{search.capitalize}"
-    else
-
-           puts "--------#{search.capitalize}--------- "
-          puts "1. see class methods
-              2. see instance methods"
-           option = gets.chomp.to_i
-          
-            if option == 1
-                puts "#{search.capitalize} Class methods"
-                array = type.class_methods("class")
-                list = type.method_names
-                puts "method classes not found" if array.empty?
-                array.each_with_index do |element, i|
-    
-                puts "-----------#{list[i]}----------------"
-                puts element
-    
-                end
-        
-            elsif option == 2
-            length = type.method_names.length
-            start = type.class_methods('class').length
-            puts "#{search.capitalize} Intance methods"
-            array = type.class_methods("instance")
-            list = type.method_names[start..length]
-            puts "method classe not found" if array.nil?
-            array.each_with_index do |element, i|
-    
-                puts "-----------(#{list[i]})----------------"
-                puts element
-                puts ""
-            end
-            
-
-            else
-              puts "invalid input"
-            end
-     
-    end
-    
 end
 
 
