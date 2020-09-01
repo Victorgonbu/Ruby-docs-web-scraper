@@ -37,81 +37,82 @@ def input_case(input)
 end
 
 def selection(input)
-  object = Methods.new(input)
-  method_list = object.method_list(input, @doc.parsed_page)
+  class_module = Methods.new(input)
+  method_list = class_module.method_list(input, @doc.parsed_page)
   puts "#{input.capitalize} (#{method_list.length})"
   puts method_list
-  search(object)
+  search(class_module)
 end
 
-def search(object)
+def search(class_module)
   puts "
-Search by name in #{object.name}"
+Search by name in #{class_module.name}"
   search = gets.chomp.downcase
-  result = object.search_by_name(search)
-  validate_search(result, object)
+  result = class_module.search_by_name(search)
+  validate_search(result, class_module)
 end
 
-def validate_search(result, object)
+def validate_search(result, class_module)
   if result == 2
-    puts "Related results for #{object.search}"
-    puts object.related_arr
-    object.search_by_name(object.search)
-    search(object)
+    puts "Related results for #{class_module.search}"
+    puts class_module.related_arr
+    class_module.search_by_name(class_module.search)
+    search(class_module)
   elsif result.zero?
-    puts "there is no match for #{object.search} in #{object.name} "
-    search(object)
+    puts "there is no match for #{class_module.search} in #{class_module.name} "
+    search(class_module)
   elsif result == 1
-    object.create_sub_url(@doc)
-    if object.no_methods?
-      puts "There are no methods for #{object.search}"
+    class_module.create_sub_url(@doc)
+    if class_module.no_methods?
+      puts "There are no methods for #{class_module.search}"
+      puts "URL : #{class_module.instance_url}"
       menu
     else
-      content_table(object)
+      content_table(class_module)
     end
 
   end
 end
 
-def display_methods(string, object)
-  if string == 'instance'
-    length = object.all_methods.length
-    start = object.select_methods('class').length
-    list = object.all_methods[start..length]
+def display_methods(method_type, class_module)
+  if method_type == 'instance'
+    length = class_module.all_methods.length
+    start = class_module.select_methods('class').length
+    list = class_module.all_methods[start..length]
   else
-    list = object.all_methods
+    list = class_module.all_methods
   end
 
-  puts "#{object.search.capitalize} #{string.capitalize} methods"
-  array = object.select_methods(string)
-  puts "Method #{string.capitalize} not found" if array.empty?
-  array.each_with_index do |element, i|
-    puts "----------(#{list[i]})----------"
-    puts element
+  puts "#{class_module.search.capitalize} #{method_type.capitalize} methods"
+  method_list = class_module.select_methods(method_type)
+  puts "Method #{method_type.capitalize} not found" if method_list.empty?
+  method_list.each_with_index do |methods, index|
+    puts "----------(#{list[index]})----------"
+    puts methods
     puts ''
   end
 end
 
-def content_table(object)
-  puts "--------#{object.search.capitalize}--------- "
-  puts "URL : #{object.class_url}"
+def content_table(class_module)
+  puts "--------#{class_module.search.capitalize}---------"
+  puts "URL : #{class_module.instance_url}"
   puts '->'
   puts '1.Show class methods '
   puts '2.Show instance methods'
   option = gets.chomp.to_i
-  option_case(option, object)
+  option_case(option, class_module)
 end
 
-def option_case(option, object)
+def option_case(option, class_module)
   case option
   when 1
-    display_methods('class', object)
+    display_methods('class', class_module)
 
   when 2
-    display_methods('instance', object)
+    display_methods('instance', class_module)
   else
     puts 'invalid input'
-    content_table(object)
+    content_table(class_module)
   end
   menu
 end

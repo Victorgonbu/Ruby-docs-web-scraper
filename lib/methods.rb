@@ -1,5 +1,9 @@
 class Methods
-  attr_reader :class_url, :parsed_url, :name, :selected_list, :search, :related_arr
+  private
+  attr_reader :parsed_url, :selected_list
+  
+  public
+  attr_reader :instance_url, :name, :search, :related_arr
 
   def initialize(element)
     @name = element
@@ -72,7 +76,7 @@ class Methods
     @current_element = fix_name(@current_element)
     doc.sub_url(@current_element)
     @parsed_url = doc.sub_method_parsed
-    @class_url = doc.s_url
+    @instance_url = doc.s_url
   end
 
   def no_methods?
