@@ -4,7 +4,7 @@ Hello ladies and gentlemen.
 
 This is the Microverse Ruby capstone project in which I'm allowed to create a scrapper of a web-site of my desire.
 
-For this project, I created a scrapper for Ruby-docs. In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
+For this project, I created a scrapper for [Ruby-docs 2.7.1](https://ruby-doc.org/core-2.7.1/). In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
 Choose whether you want to display all class methods or all instance methods, no matter what your selection is, the scrapper will provide you with a method list and a class/module URL.
 
 ## How it works
@@ -80,9 +80,6 @@ Detailed documentation about this tool can be found [here](https://relishapp.com
 ## Install
 
 - In a terminal window type `gem install rspec`
-- Once rspec install has finished, type `rspec --init`
-- You will see a folder spec and a file `.rspec`
-- Inside spec folder you'll see a `spec_helper.rb` file.
 
 ## Run 
 > For this project we have alredy created 2 files called `methods_spec.rb` and `url_spec.rb`. If you want to create another one, make sure you follow name required convetion: `[your file name] _spec.rb`. same way we created the 2 existing ones.
