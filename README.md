@@ -46,7 +46,7 @@ As expected, it will drop a list with all class methods together with the Math m
 
 ## Environment set up requirements
 
-To run this game, you need ruby installed in your environment.
+To run this scrapper, you need ruby installed in your environment.
 Run the following command:
 
 ```
