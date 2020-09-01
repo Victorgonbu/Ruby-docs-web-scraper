@@ -66,12 +66,12 @@ describe Methods do
     end
   end
 
-  describe '#method_names' do
+  describe '#all_methods' do
     it 'return all methods from given class' do
       object.method_list('module', doc.parsed_page)
       object.search_by_name('enumerable')
       object.create_sub_url(doc)
-      instance = object.method_names
+      instance = object.all_methods
       expect(instance.length).to eql(59)
     end
 
@@ -79,7 +79,7 @@ describe Methods do
       object.method_list('class', doc.parsed_page)
       object.search_by_name('fatal')
       object.create_sub_url(doc)
-      instance = object.method_names
+      instance = object.all_methods
       expect(instance.length).to eql(0)
     end
   end
@@ -122,7 +122,7 @@ describe Methods do
         object.method_list('class', doc.parsed_page)
         object.search_by_name('fatal')
         object.create_sub_url(doc)
-        object.method_names
+        object.all_methods
         instance = object.no_methods?
         expect(instance).to be(true)
       end
@@ -130,7 +130,7 @@ describe Methods do
         object.method_list('class', doc.parsed_page)
         object.search_by_name('array')
         object.create_sub_url(doc)
-        object.method_names
+        object.all_methods
         instance = object.no_methods?
         expect(instance).to be(false)
       end
