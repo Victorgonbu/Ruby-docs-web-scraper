@@ -49,11 +49,28 @@ class Methods
     end
     validate
   end
-
+  
+  def fix_name(search_input)
+    if search_input.include?('::')
+      search_input = search_input.split('::')
+      number_words = search_input.length
+      transformed_input = ''
+      number_words.times do |index|
+        if index + 1 == number_words
+          transformed_input += search_input[index]
+        else
+          transformed_input += search_input[index] + '/'
+        end
+      end
+      return transformed_input
+    end
+    search_input
+  end
 
   def create_sub_url(doc)
+    @current_element = fix_name(@current_element)
     doc.sub_url(@current_element)
-    @parsed_url = doc.sub_method_parsed
+    @parsed_url = doc.sub_method_parse
     @class_url = doc.s_url
   end
 
