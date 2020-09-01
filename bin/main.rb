@@ -74,25 +74,6 @@ def validate_search(result, class_module)
   end
 end
 
-def display_methods(method_type, class_module)
-  if method_type == 'instance'
-    length = class_module.all_methods.length
-    start = class_module.select_methods('class').length
-    list = class_module.all_methods[start..length]
-  else
-    list = class_module.all_methods
-  end
-
-  puts "#{class_module.search.capitalize} #{method_type.capitalize} methods"
-  method_list = class_module.select_methods(method_type)
-  puts "Method #{method_type.capitalize} not found" if method_list.empty?
-  method_list.each_with_index do |methods, index|
-    puts "----------(#{list[index]})----------"
-    puts methods
-    puts ''
-  end
-end
-
 def content_table(class_module)
   puts "--------#{class_module.search.capitalize}---------"
   puts "URL : #{class_module.instance_url}"
@@ -116,4 +97,24 @@ def option_case(option, class_module)
   end
   menu
 end
+
+def display_methods(method_type, class_module)
+  if method_type == 'instance'
+    length = class_module.all_methods.length
+    start = class_module.select_methods('class').length
+    list = class_module.all_methods[start..length]
+  else
+    list = class_module.all_methods
+  end
+
+  puts "#{class_module.search.capitalize} #{method_type.capitalize} methods"
+  method_list = class_module.select_methods(method_type)
+  puts "Method #{method_type.capitalize} not found" if method_list.empty?
+  method_list.each_with_index do |methods, index|
+    puts "----------(#{list[index]})----------"
+    puts methods
+    puts ''
+  end
+end
+
 menu

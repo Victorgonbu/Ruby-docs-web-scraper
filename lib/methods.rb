@@ -1,7 +1,24 @@
 class Methods
   private
   attr_reader :parsed_url, :selected_list
-  
+
+  def fix_name(search_input)
+    if search_input.include?('::')
+      search_input = search_input.split('::')
+      number_words = search_input.length
+      transformed_input = ''
+      number_words.times do |index|
+        if index + 1 == number_words
+          transformed_input += search_input[index]
+        else
+          transformed_input += search_input[index] + '/'
+        end
+      end
+      return transformed_input
+    end
+    search_input
+  end
+
   public
   attr_reader :instance_url, :name, :search, :related_arr
 
@@ -53,23 +70,6 @@ class Methods
       end
     end
     validate
-  end
-  
-  def fix_name(search_input)
-    if search_input.include?('::')
-      search_input = search_input.split('::')
-      number_words = search_input.length
-      transformed_input = ''
-      number_words.times do |index|
-        if index + 1 == number_words
-          transformed_input += search_input[index]
-        else
-          transformed_input += search_input[index] + '/'
-        end
-      end
-      return transformed_input
-    end
-    search_input
   end
 
   def create_sub_url(doc)
