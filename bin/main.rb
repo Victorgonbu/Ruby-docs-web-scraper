@@ -84,16 +84,18 @@ def display_methods(string, object)
 
   puts "#{object.search.capitalize} #{string.capitalize} methods"
   array = object.select_methods(string)
-  puts "URL : #{object.class_url}"
-  puts 'Method classes not found' if array.empty?
+  puts "Method #{string.capitalize} not found" if array.empty?
   array.each_with_index do |element, i|
     puts "----------(#{list[i]})----------"
     puts element
+    puts ''
   end
 end
 
 def content_table(object)
   puts "--------#{object.search.capitalize}--------- "
+  puts "URL : #{object.class_url}"
+  puts '->'
   puts '1.Show class methods '
   puts '2.Show instance methods'
   option = gets.chomp.to_i

@@ -42,6 +42,7 @@ class Methods
       if element.downcase == search
         @current_element = element
         validate = 1
+        break
       elsif element[0...s_length].downcase == search
         @related_arr << element
         validate = 2
@@ -70,7 +71,7 @@ class Methods
   def create_sub_url(doc)
     @current_element = fix_name(@current_element)
     doc.sub_url(@current_element)
-    @parsed_url = doc.sub_method_parse
+    @parsed_url = doc.sub_method_parsed
     @class_url = doc.s_url
   end
 
