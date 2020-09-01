@@ -1,7 +1,9 @@
 require_relative '../lib/methods.rb'
 require_relative '../lib/url.rb'
 require 'rspec'
-require 'Nokogiri'
+require 'open-uri'
+require 'nokogiri'
+
 
 describe Methods do
   let(:doc) { Url.new }
@@ -113,7 +115,7 @@ describe Methods do
     it 'raise an error if search results do not match any element' do
       object.method_list('class', doc.parsed_page)
       object.search_by_name('fatalo')
-      expect { object.create_sub_url(doc) }.to raise_error(TypeError)
+      expect { object.create_sub_url(doc) }.to raise_error(NoMethodError)
     end
   end
   describe '#no_methods?' do

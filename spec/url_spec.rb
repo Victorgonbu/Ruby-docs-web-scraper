@@ -1,7 +1,8 @@
 require_relative '../lib/methods.rb'
 require_relative '../lib/url.rb'
 require 'rspec'
-require 'Nokogiri'
+require 'open-uri'
+require 'nokogiri'
 
 describe Url do
   let(:doc) { Url.new }
