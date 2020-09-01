@@ -10,22 +10,6 @@ puts 'Here you will find all classes and mudules in ruby-doc.org version 2.7.1'
 
 @doc = Url.new
 
-def selection(input)
-  object = Methods.new(input)
-  method_list = object.method_list(input, @doc.parsed_page)
-  puts "#{input.capitalize} (#{method_list.length})"
-  puts method_list
-  search(object)
-end
-
-def search(object)
-  puts "
-Search by name in #{object.name}"
-  search = gets.chomp.downcase
-  result = object.search_by_name(search)
-  validate_search(result, object)
-end
-
 def menu
   puts '
 ----------Menu----------'
@@ -33,7 +17,10 @@ def menu
   puts '2.Show all Ruby modules'
   puts '3.Exit'
   input = gets.chomp.to_i
+  input_case(input)
+end
 
+def input_case(input)
   case input
   when 1
     input = 'class'
@@ -50,6 +37,22 @@ def menu
   end
 end
 
+def selection(input)
+  object = Methods.new(input)
+  method_list = object.method_list(input, @doc.parsed_page)
+  puts "#{input.capitalize} (#{method_list.length})"
+  puts method_list
+  search(object)
+end
+
+def search(object)
+  puts "
+Search by name in #{object.name}"
+  search = gets.chomp.downcase
+  result = object.search_by_name(search)
+  validate_search(result, object)
+end
+
 def validate_search(result, object)
   if result == 2
     puts "Related results for #{object.search}"
@@ -61,7 +64,7 @@ def validate_search(result, object)
     search(object)
   elsif result == 1
     object.create_sub_url(@doc)
-    if object.method_names.empty?
+    if object.no_methods?
       puts "There are no methods for #{object.search}"
       menu
     else
@@ -73,11 +76,11 @@ end
 
 def display_methods(string, object)
   if string == 'instance'
-    length = object.method_names.length
+    length = object.all_methods.length
     start = object.select_methods('class').length
-    list = object.method_names[start..length]
+    list = object.all_methods[start..length]
   else
-    list = object.method_names
+    list = object.all_methods
   end
 
   puts "#{object.search.capitalize} #{string.capitalize} methods"
@@ -95,11 +98,15 @@ def content_table(object)
   puts '1.Show class methods '
   puts '2.Show instance methods'
   option = gets.chomp.to_i
+  option_case(option, object)
+end
 
-  if option == 1
+def option_case(option, object)
+  case option
+  when 1
     display_methods('class', object)
 
-  elsif option == 2
+  when 2
     display_methods('instance', object)
   else
     puts 'invalid input'
@@ -107,5 +114,4 @@ def content_table(object)
   end
   menu
 end
-
 menu

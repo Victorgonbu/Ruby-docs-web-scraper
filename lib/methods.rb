@@ -29,7 +29,7 @@ class Methods
     selected
   end
 
-  def method_names
+  def all_methods
     method_list = []
     method_list_url = @parsed_url.css('#method-list-section').css('ul').css('li')
     method_list_url.each { |element| method_list << element.text }
@@ -60,6 +60,6 @@ class Methods
   end
 
   def no_methods?
-    method_names.empty? ? true : false
+    all_methods.empty? ? true : false
   end
 end
