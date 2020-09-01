@@ -99,19 +99,12 @@ def option_case(option, class_module)
 end
 
 def display_methods(method_type, class_module)
-  if method_type == 'instance'
-    length = class_module.all_methods.length
-    start = class_module.select_methods('class').length
-    list = class_module.all_methods[start..length]
-  else
-    list = class_module.all_methods
-  end
-
+  all_methods_list = class_module.method_list_for(method_type)
   puts "#{class_module.search.capitalize} #{method_type.capitalize} methods"
   method_list = class_module.select_methods(method_type)
-  puts "Method #{method_type.capitalize} not found" if method_list.empty?
+  puts "#{method_type.capitalize} Methods not found" if method_list.empty?
   method_list.each_with_index do |methods, index|
-    puts "----------(#{list[index]})----------"
+    puts "----------(#{all_methods_list[index]})----------"
     puts methods
     puts ''
   end

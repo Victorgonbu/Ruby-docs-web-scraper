@@ -54,6 +54,16 @@ class Methods
     method_list
   end
 
+  def method_list_for(method_type)
+    if method_type == 'instance'
+      length = self.all_methods.length
+      start = self.select_methods('class').length
+      list = self.all_methods[start..length]
+    else
+      list = self.all_methods
+    end
+  end
+
   def search_by_name(search)
     array = selected_list
     @search = search
