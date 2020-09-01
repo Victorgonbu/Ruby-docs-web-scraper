@@ -38,7 +38,7 @@ end
 
 def selection(input)
   class_module = Methods.new(input)
-  method_list = class_module.method_list(input, @doc.parsed_page)
+  method_list = class_module.class_module_list(input, @doc.parsed_page)
   puts "#{input.capitalize} (#{method_list.length})"
   puts method_list
   search(class_module)
@@ -55,7 +55,7 @@ end
 def validate_search(result, class_module)
   if result == 2
     puts "Related results for #{class_module.search}"
-    puts class_module.related_arr
+    puts class_module.related_results
     class_module.search_by_name(class_module.search)
     search(class_module)
   elsif result.zero?
