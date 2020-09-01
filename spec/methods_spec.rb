@@ -89,7 +89,6 @@ describe Methods do
         object.create_sub_url(doc)
         instance = object.method_list_for('class')
         expect(instance.length).to eql(112)
-
       end
       it 'for instance methods' do
         object.class_module_list('module', doc.parsed_page)
