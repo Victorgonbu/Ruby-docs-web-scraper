@@ -1,6 +1,3 @@
-require 'byebug'
-require 'open-uri'
-require 'httparty'
 class Methods
   attr_reader :class_url, :parsed_url, :name, :selected_list, :search, :related_arr
 
@@ -52,6 +49,7 @@ class Methods
     end
     validate
   end
+
 
   def create_sub_url(doc)
     doc.sub_url(@current_element)

@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'nokogiri'
-require 'byebug'
 
 require_relative '../lib/methods.rb'
 require_relative '../lib/url.rb'

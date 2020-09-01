@@ -1,25 +1,25 @@
-# Ruby-docs-web-scrapper
+# Ruby-Docs Web Scrapper
 
 Hello ladies and gentlemen.
 
-This is the Microverse Ruby capstone project in which I'm allowed to create a scrapper of the web-site of my desire.
+This is the Microverse Ruby capstone project in which I'm allowed to create a scrapper of a web-site of my desire.
 
-For this project create a scrapper for Ruby-docs. In which you can see all Ruby classes, all ruby modules, and can also search for a specific class/module of your needs.
-In this scrapper, choose whether you want to display all class methods or all instance methods with its respective URL of class/module previously given.
+For this project, I created a scrapper for Ruby-docs. In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
+Choose whether you want to display all class methods or all instance methods, no matter what your selection is, the scrapper will provide you with a method list and a class/module URL.
 
 ## How it works
 
-First of all, it will show you a menu like this: 
+First of all, the menu will be displayed: 
 
 ![image](assets/menu.PNG)
 
-Here you can input an option number, input 1 if you want to see all classes, 2 if you want to see all modules, or 3 if you just want to get our of the program.
+Here you can input an option number, input 1 if you want to see all classes, 2 if you want to see all modules, or 3 if you just want to get out of the program.
 
 After inputting the desired option, you will see something like this (in this case I choose to see all modules):
 
 ![image](assets/module.PNG)
 
-As you can see all Ruby modules are displayed. Also, you can see there is a way you can search for a specific class/module. So I will try to search for the IO module to see what happens.
+As you can see all Ruby modules are displayed. additionally, there is a way you can search for a specific class/module. So I will try to search for the IO module to see what happens.
 
 ![image](assets/search.PNG)
 
@@ -29,7 +29,7 @@ knowing that i'll input Math in the search field to see what happens next
 
 ![image](assets/math.PNG)
 
-Ruby-docs-scrapper will display another menu asking you for a number input depending on what you want to see, so you can either see all class methods or all instance methods. But if there are no methods for module/class searched, then it will drop the following message (fatal class in this case):
+Ruby-docs-scrapper will display another menu asking you for an input number depending on what you want to see, so you can either see all class methods or all instance methods. But if there are no methods for module/class searched, then it will drop the following message (fatal class in this case):
 
 ![image](assets/no_methods.PNG)
 
