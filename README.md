@@ -99,7 +99,7 @@ Else you'll see a red message.
 
 ## Live Demo
 
-Comming soon...
+[![Run on Repl.it](https://repl.it/badge/github/Shaqri/Ruby-docs-web-scrapper)](https://repl.it/github/Shaqri/Ruby-docs-web-scrapper)
 
 
 ## Author
