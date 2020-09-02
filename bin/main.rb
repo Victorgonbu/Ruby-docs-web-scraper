@@ -1,0 +1,113 @@
+require 'open-uri'
+require 'nokogiri'
+
+require_relative '../lib/methods.rb'
+require_relative '../lib/url.rb'
+
+puts 'Welcome to ruby docs scrapper'
+puts 'Here you will find all classes and mudules in ruby-doc.org version 2.7.1'
+
+@doc = Url.new
+
+def menu
+  puts '
+----------Menu----------'
+  puts '1.Show all Ruby classes'
+  puts '2.Show all Ruby modules'
+  puts '3.Exit'
+  input = gets.chomp.to_i
+  input_case(input)
+end
+
+def input_case(input)
+  case input
+  when 1
+    input = 'class'
+    selection(input)
+  when 2
+    input = 'module'
+    selection(input)
+
+  when 3
+    exit
+  else
+    puts 'Sorry, it seem there is no match for that option'
+    menu
+  end
+end
+
+def selection(input)
+  class_module = Methods.new(input)
+  method_list = class_module.class_module_list(input, @doc.parsed_page)
+  puts "#{input.capitalize} (#{method_list.length})"
+  puts method_list
+  search(class_module)
+end
+
+def search(class_module)
+  puts "
+Search by name in #{class_module.name}"
+  search = gets.chomp.downcase
+  result = class_module.search_by_name(search)
+  validate_search(result, class_module)
+end
+
+def validate_search(result, class_module)
+  if result == 2
+    puts "Related results for #{class_module.search}"
+    puts class_module.related_results
+    class_module.search_by_name(class_module.search)
+    search(class_module)
+  elsif result.zero?
+    puts "there is no match for #{class_module.search} in #{class_module.name} "
+    search(class_module)
+  elsif result == 1
+    class_module.create_sub_url(@doc)
+    if class_module.no_methods?
+      puts "There are no methods for #{class_module.search}"
+      puts "URL : #{class_module.instance_url}"
+      menu
+    else
+      content_table(class_module)
+    end
+
+  end
+end
+
+def content_table(class_module)
+  puts "--------#{class_module.search.capitalize}---------"
+  puts "URL : #{class_module.instance_url}"
+  puts '->'
+  puts '1.Show class methods '
+  puts '2.Show instance methods'
+  option = gets.chomp.to_i
+  option_case(option, class_module)
+end
+
+def option_case(option, class_module)
+  case option
+  when 1
+    display_methods('class', class_module)
+
+  when 2
+    display_methods('instance', class_module)
+  else
+    puts 'invalid input'
+    content_table(class_module)
+  end
+  menu
+end
+
+def display_methods(method_type, class_module)
+  all_methods_list = class_module.method_list_for(method_type)
+  puts "#{class_module.search.capitalize} #{method_type.capitalize} methods"
+  method_list = class_module.select_methods(method_type)
+  puts "#{method_type.capitalize} Methods not found" if method_list.empty?
+  method_list.each_with_index do |methods, index|
+    puts "----------(#{all_methods_list[index]})----------"
+    puts methods
+    puts ''
+  end
+end
+
+menu
