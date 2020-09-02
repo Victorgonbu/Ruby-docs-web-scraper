@@ -1,8 +1,6 @@
 # Ruby-Docs Web Scrapper
 
-Hello ladies and gentlemen.
-
-This is the Microverse Ruby capstone project in which I'm allowed to create a scrapper of a web-site of my desire.
+Hello ladies and gentlemen, This is the Microverse Ruby capstone project.
 
 For this project, I created a scrapper for [Ruby-docs 2.7.1](https://ruby-doc.org/core-2.7.1/). In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
 Choose whether you want to display all class methods or all instance methods, no matter what your selection is, the scrapper will provide you with a method list and a class/module URL.
