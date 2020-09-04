@@ -1,9 +1,9 @@
-# Ruby-Docs Web Scrapper
+# Ruby-Docs Web Scraper
 
 Hello ladies and gentlemen, This is the Microverse Ruby capstone project.
 
-For this project, I created a scrapper for [Ruby-docs 2.7.1](https://ruby-doc.org/core-2.7.1/). In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
-Choose whether you want to display all class methods or all instance methods, no matter what your selection is, the scrapper will provide you with a method list and a class/module URL.
+For this project, I created a scraper for [Ruby-docs 2.7.1](https://ruby-doc.org/core-2.7.1/). In which you can see all Ruby classes, all ruby modules, and also search for a specific class/module of your needs.  
+Choose whether you want to display all class methods or all instance methods, no matter what your selection is, the scraper will provide you with a method list and a class/module URL.
 
 ## How it works
 
@@ -21,13 +21,13 @@ As you can see all Ruby modules are displayed. additionally, there is a way you 
 
 ![image](assets/search.PNG)
 
-oh! it seems that there is no exact match for IO, however, ruby-docs-scrapper will drop a list of related results for your search and then ask you again for a specific module/class.
+oh! it seems that there is no exact match for IO, however, ruby-docs-scraper will drop a list of related results for your search and then ask you again for a specific module/class.
 
 knowing that i'll input Math in the search field to see what happens next
 
 ![image](assets/math.PNG)
 
-Ruby-docs-scrapper will display another menu asking you for an input number depending on what you want to see, so you can either see all class methods or all instance methods. But if there are no methods for module/class searched, then it will drop the following message (fatal class in this case):
+Ruby-docs-scraper will display another menu asking you for an input number depending on what you want to see, so you can either see all class methods or all instance methods. But if there are no methods for module/class searched, then it will drop the following message (fatal class in this case):
 
 ![image](assets/no_methods.PNG)
 
@@ -45,7 +45,7 @@ As expected, it will drop a list with all class methods together with the Math m
 
 ## Environment set up requirements
 
-To run this scrapper, you need ruby installed in your environment.
+To run this scraper, you need ruby installed in your environment.
 Run the following command:
 
 ```
@@ -68,7 +68,7 @@ To get a local copy up and running follow these simple example steps
 - move to the repository inside the command line using cd and the path to the file
 - run `bundle install`
 - to run the file enter `bin/main.rb` from inside the main folder in the repository
-- use the Ruby-docs-scrapper
+- use the Ruby-docs-scraper
 
 
 ## Running the RSpec tests
